@@ -6,4 +6,6 @@ import { viteSingleFile } from 'vite-plugin-singlefile';
 export default defineConfig({
   plugins: [react(), viteSingleFile()],
   base: './',
+  // Output to /docs so GitHub Pages can serve it (Settings → Pages → folder: /docs)
+  build: { outDir: 'docs' },
 });

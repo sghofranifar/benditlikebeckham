@@ -6,7 +6,7 @@ Students use the app to **see tasks and play games**. **All writing happens in t
 
 ## Use it in class
 
-- **Just open `dist/index.html`** in any browser (iPad, laptop, Chromebook). It is one self-contained file and works offline. Only the fonts load from the internet.
+- **Just open `docs/index.html`** in any browser (iPad, laptop, Chromebook). It is one self-contained file and works offline. Only the fonts load from the internet.
 - Progress is saved **in that browser on that device**.
 - 🔑 **Teacher panel** (key icon, top right). Master password: `beckham7`. It shows every chapter password, can unlock all levels (for demos) and can reset a device.
 - 🔔 **Call teacher** button on every screen.
@@ -45,7 +45,7 @@ All content is plain data in `src/data/`:
 ```bash
 npm install
 npm run dev     # live preview
-npm run build   # writes dist/index.html (single file)
+npm run build   # writes docs/index.html (single file)
 ```
 
 Built with React, TypeScript, Tailwind CSS, Framer Motion (spring physics) and Zustand (state).
