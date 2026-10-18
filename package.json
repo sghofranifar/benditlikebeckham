@@ -4,8 +4,8 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
+    "dev": "vite --open /dev.html",
+    "build": "tsc -b && vite build && node scripts/publish.mjs",
     "typecheck": "tsc -b",
     "preview": "vite preview"
   },

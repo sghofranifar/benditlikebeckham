@@ -2,10 +2,11 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { viteSingleFile } from 'vite-plugin-singlefile';
 
-// Builds ONE self-contained index.html (no server needed) — open it offline on any iPad or laptop.
+// Source entry is dev.html (open http://localhost:5173/dev.html while developing).
+// The build produces ONE self-contained file, which scripts/publish.mjs copies to
+// ./index.html and ./docs/index.html so GitHub Pages works from "/ (root)" or "/docs".
 export default defineConfig({
   plugins: [react(), viteSingleFile()],
   base: './',
-  // Output to /docs so GitHub Pages can serve it (Settings → Pages → folder: /docs)
-  build: { outDir: 'docs' },
+  build: { outDir: 'build', rollupOptions: { input: 'dev.html' } },
 });
