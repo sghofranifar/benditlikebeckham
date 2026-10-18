@@ -16,6 +16,7 @@ export default {
         display: ['"Anton"', 'Impact', 'Haettenschweiler', '"Arial Narrow Bold"', 'sans-serif'],
         body: ['"Manrope"', 'system-ui', '-apple-system', 'Segoe UI', 'sans-serif'],
         hand: ['"Caveat"', '"Comic Sans MS"', 'cursive'],
+        teletext: ['"VT323"', '"Courier New"', 'monospace'],
       },
       boxShadow: {
         glass: '0 1px 0 0 rgba(255,255,255,0.06) inset, 0 20px 50px -20px rgba(0,0,0,0.7), 0 2px 6px rgba(0,0,0,0.3)',

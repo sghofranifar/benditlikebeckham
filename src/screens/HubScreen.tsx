@@ -9,6 +9,9 @@ import { Reveal, SpringButton, Stars, StatBar } from '../components/ui';
 import { Modal } from '../components/Modal';
 import { CHARACTERS } from '../data/characters';
 import type { Level } from '../types';
+import { sameCode, unlockCode } from '../lib/codes';
+import { IMAGES } from '../data/config';
+import { OptionalImg } from '../components/OptionalImg';
 
 const THEMES = [
   ['Identity', '🪞'],
@@ -26,7 +29,8 @@ export function HubScreen() {
   const xp = totalXP(s);
   const rank = rankFor(xp);
   const cards = unlockedCards(s);
-  const current = [...LEVELS].reverse().find((l) => s.unlocked.includes(l.id)) ?? LEVELS[0];
+  const current = [...LEVELS].filter((l) => !l.extra).reverse().find((l) => s.unlocked.includes(l.id)) ?? LEVELS[0];
+  const stats = current.stats ?? LEVELS[12].stats!;
   const curProg = levelProgress(current, s);
   const won = Object.values(s.gameStars).filter((v) => v > 0).length;
   const [locked, setLocked] = useState<Level | null>(null);
@@ -52,9 +56,10 @@ export function HubScreen() {
           SEASON · SEASON · SEASON
         </motion.div>
         <div className="-mt-[0.6em] sm:-mt-[0.75em]">
-          <motion.p className="mb-2 text-xs font-extrabold uppercase tracking-[0.3em] text-lime" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-            Welcome back, {s.playerName || 'rookie'}
-          </motion.p>
+          <motion.div className="mb-3 flex flex-wrap items-center gap-3" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+            <span className="font-teletext bg-[#0000ff] px-2 text-lg leading-tight text-[#ffff00]">SEASON 2001/02</span>
+            <span className="text-xs font-extrabold uppercase tracking-[0.3em] text-lime">Welcome back, {s.playerName || 'rookie'}</span>
+          </motion.div>
           <motion.h1 className="display t-hero" initial={{ y: 40, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={spring.soft}>
             Your season, <span className="text-lime">{rank.name}</span>
           </motion.h1>
@@ -76,7 +81,9 @@ export function HubScreen() {
             transition={spring.soft}
             className="glass group flex h-full min-h-[300px] w-full flex-col overflow-hidden p-6 text-left sm:p-8"
           >
+            <OptionalImg src={IMAGES.hubHero} alt="" className="absolute inset-0 h-full w-full rounded-3xl object-cover opacity-30" />
             <div className="absolute -right-16 -top-16 h-72 w-72 rounded-full opacity-25 blur-3xl transition-opacity group-hover:opacity-40" style={{ background: accentHex[current.accent] }} />
+            <div className="kit-stripes absolute inset-x-0 top-0 h-2 opacity-80" />
             <div className="relative flex items-center justify-between">
               <span className="chip" style={{ color: accentHex[current.accent] }}>
                 Next up · Week {current.week}
@@ -118,17 +125,20 @@ export function HubScreen() {
           </div>
         </Reveal>
 
-        {/* Games won */}
+        {/* Games won: Ceefax-style results page */}
         <Reveal className="md:col-span-2" delay={0.1}>
-          <div className="glass flex h-full items-center gap-5 p-6">
-            <div className="display text-6xl tabular-nums">
-              {won}
-              <span className="text-2xl text-chalk-mute">/{LEVELS.length}</span>
+          <div className="font-teletext h-full overflow-hidden rounded-3xl border border-white/10 bg-black p-4 text-[1.35rem] leading-[1.1]">
+            <div className="flex justify-between bg-[#0000ff] px-1 text-white">
+              <span>P303 RESULTS</span>
+              <span>{won}/{LEVELS.length}</span>
             </div>
-            <div>
-              <div className="text-[0.7rem] font-extrabold uppercase tracking-[0.18em] text-chalk-dim">Games won</div>
-              <p className="text-sm text-chalk-dim">Each win unlocks character cards & XP.</p>
-            </div>
+            {LEVELS.filter((l) => s.gameStars[l.id]).slice(-4).map((l) => (
+              <div key={l.id} className="mt-1 flex justify-between gap-2">
+                <span className="truncate text-[#00ffff]">{l.title.toUpperCase()}</span>
+                <span className="shrink-0 text-[#ffff00]">{'*'.repeat(s.gameStars[l.id])}</span>
+              </div>
+            ))}
+            {won === 0 && <div className="mt-1 text-[#00ff00]">NO RESULTS YET. WIN A GAME TO APPEAR HERE.</div>}
           </div>
         </Reveal>
 
@@ -140,10 +150,10 @@ export function HubScreen() {
               <span className="chip">story meter</span>
             </div>
             <div className="space-y-3">
-              <StatBar icon="⚽" label="Passion for football" value={current.stats.passion} color="#c8ff3d" />
-              <StatBar icon="🏠" label="Family harmony" value={current.stats.family} color="#ffb020" />
-              <StatBar icon="🕊️" label="Freedom" value={current.stats.freedom} color="#5cc8ff" />
-              <StatBar icon="🤝" label="Friendship" value={current.stats.friendship} color="#ff4d8d" />
+              <StatBar icon="⚽" label="Passion for football" value={stats.passion} color="#c8ff3d" />
+              <StatBar icon="🏠" label="Family harmony" value={stats.family} color="#ffb020" />
+              <StatBar icon="🕊️" label="Freedom" value={stats.freedom} color="#5cc8ff" />
+              <StatBar icon="🤝" label="Friendship" value={stats.friendship} color="#ff4d8d" />
             </div>
             <p className="mt-4 font-hand text-lg leading-snug text-chalk-dim">Notebook: do you agree with these scores? Which one would you change, and why?</p>
           </div>
@@ -218,42 +228,22 @@ export function HubScreen() {
               <div className="mb-3 text-[0.72rem] font-extrabold uppercase tracking-[0.25em] text-chalk-mute">Week {w}</div>
             </Reveal>
             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-              {LEVELS.filter((l) => l.week === w).map((l, i) => {
-                const unlocked = s.unlocked.includes(l.id);
-                const p = levelProgress(l, s);
-                const c = accentHex[l.accent];
-                return (
-                  <Reveal key={l.id} delay={i * 0.05}>
-                    <motion.button
-                      type="button"
-                      onClick={() => open(l)}
-                      whileHover={{ y: -5, rotate: unlocked ? -0.6 : 0 }}
-                      whileTap={{ scale: 0.97 }}
-                      transition={spring.snappy}
-                      className={`glass flex h-full min-h-[170px] w-full flex-col p-5 text-left ${unlocked ? '' : 'opacity-60'}`}
-                    >
-                      <div className="flex items-start justify-between">
-                        <span className="display text-5xl leading-none" style={{ color: unlocked ? c : '#6b7591' }}>
-                          {l.id === 14 ? 'FT' : String(l.id).padStart(2, '0')}
-                        </span>
-                        {unlocked ? <Stars n={s.gameStars[l.id] ?? 0} size="text-base" /> : <span className="text-xl">🔒</span>}
-                      </div>
-                      <div className="mt-auto pt-4">
-                        <div className="text-[0.65rem] font-extrabold uppercase tracking-[0.18em] text-chalk-mute">
-                          {l.chapter} · {l.pages}
-                        </div>
-                        <div className="display t-h3 mt-0.5">{l.title}</div>
-                        <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-white/10">
-                          <motion.div className="h-full rounded-full" style={{ background: c }} initial={{ width: 0 }} whileInView={{ width: `${p.pct * 100}%` }} viewport={{ once: true }} transition={spring.soft} />
-                        </div>
-                      </div>
-                    </motion.button>
-                  </Reveal>
-                );
+              {LEVELS.filter((l) => l.week === w && !l.extra).map((l, i) => {
+                return <Ticket key={l.id} l={l} onOpen={open} delay={i * 0.05} />;
               })}
             </div>
           </div>
         ))}
+        <div className="mb-8">
+          <Reveal>
+            <div className="mb-3 text-[0.72rem] font-extrabold uppercase tracking-[0.25em] text-violet">Extra time · bonus research unit</div>
+          </Reveal>
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {LEVELS.filter((l) => l.extra).map((l) => (
+              <Ticket key={l.id} l={l} onOpen={open} />
+            ))}
+          </div>
+        </div>
       </section>
 
       <UnlockModal level={locked} onClose={() => setLocked(null)} />
@@ -261,14 +251,56 @@ export function HubScreen() {
   );
 }
 
+// Fixture card styled as a 2001/02 match ticket.
+function Ticket({ l, onOpen, delay = 0 }: { l: Level; onOpen: (l: Level) => void; delay?: number }) {
+  const s = useGame();
+  const unlocked = s.unlocked.includes(l.id);
+  const p = levelProgress(l, s);
+  const c = accentHex[l.accent];
+  const num = l.id === 14 ? 'FT' : l.id === 15 ? 'XT' : String(l.id).padStart(2, '0');
+  return (
+    <Reveal delay={delay}>
+      <motion.button
+        type="button"
+        onClick={() => onOpen(l)}
+        whileHover={{ y: -5, rotate: unlocked ? -0.8 : 0 }}
+        whileTap={{ scale: 0.97 }}
+        transition={spring.snappy}
+        className={`glass ticket flex h-full min-h-[200px] w-full flex-col overflow-hidden p-0 text-left ${unlocked ? '' : 'opacity-60'}`}
+      >
+        <div className="flex items-start justify-between px-5 pt-4">
+          <div>
+            <div className="font-teletext text-base leading-none text-chalk-mute">ADMIT ONE · MATCHDAY {num}</div>
+            <div className="display mt-1 text-5xl leading-none" style={{ color: unlocked ? c : '#6b7591' }}>
+              {num}
+            </div>
+          </div>
+          {unlocked ? <Stars n={s.gameStars[l.id] ?? 0} size="text-base" /> : <span className="text-xl">🔒</span>}
+        </div>
+        <div className="tear mx-5 mt-4" />
+        <div className="mt-auto px-5 pb-4 pt-3">
+          <div className="text-[0.65rem] font-extrabold uppercase tracking-[0.18em] text-chalk-mute">
+            {l.chapter} · {l.pages}
+          </div>
+          <div className="display t-h3 mt-0.5">{l.title}</div>
+          <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-white/10">
+            <motion.div className="h-full rounded-full" style={{ background: c }} initial={{ width: 0 }} whileInView={{ width: `${p.pct * 100}%` }} viewport={{ once: true }} transition={spring.soft} />
+          </div>
+        </div>
+        <div className="kit-stripes h-1.5 w-full opacity-70" />
+      </motion.button>
+    </Reveal>
+  );
+}
+
 function UnlockModal({ level, onClose }: { level: Level | null; onClose: () => void }) {
-  const { unlock, go } = useGame();
+  const { unlock, go, playerName } = useGame();
   const [pw, setPw] = useState('');
   const [err, setErr] = useState('');
   const [shake, setShake] = useState(0);
   const tryIt = () => {
     if (!level) return;
-    if (pw.trim().toLowerCase() === (level.password ?? '').toLowerCase()) {
+    if (sameCode(pw, unlockCode(playerName, level.id))) {
       play('unlock');
       unlock(level.id);
       setPw('');
@@ -277,7 +309,7 @@ function UnlockModal({ level, onClose }: { level: Level | null; onClose: () => v
       go({ name: 'level', id: level.id });
     } else {
       play('bad');
-      setErr('Wrong password. Show your teacher your notebook first!');
+      setErr(`That code doesn't work for ${playerName}. Codes are personal: show your notebook to your teacher to get yours.`);
       setShake((n) => n + 1);
     }
   };
@@ -289,14 +321,15 @@ function UnlockModal({ level, onClose }: { level: Level | null; onClose: () => v
           <h2 className="display t-h1 mt-2">
             {level.chapter}: {level.title}
           </h2>
-          <p className="mt-2 text-chalk-dim">Finish the previous chapter's tasks in your notebook, show your teacher, and get the password.</p>
+          <p className="mt-2 text-chalk-dim">Finish the previous chapter in your notebook and show it to your teacher. You'll get a <b>4-letter code</b> that only works for <b>{playerName}</b>.</p>
           <motion.div key={shake} animate={shake ? { x: [0, -12, 12, -8, 8, 0] } : {}} transition={{ duration: 0.4 }} className="mt-5 flex gap-2">
             <motion.input
               value={pw}
               onChange={(e) => setPw(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && tryIt()}
-              placeholder="Password"
-              aria-label="Level password"
+              placeholder="e.g. K7QF"
+              aria-label="Personal unlock code"
+              maxLength={6}
               autoFocus
               whileFocus={{ scale: 1.02 }}
               transition={spring.snappy}

@@ -20,6 +20,10 @@ export const levelTaskIds = (l: Level) => [
   l.sprinter.id,
 ];
 
+// Tasks that must be ticked before the game unlocks (everything except the optional Sprinter).
+export const coreTaskIds = (l: Level) => levelTaskIds(l).filter((id) => id !== l.sprinter.id);
+export const coreDone = (l: Level, s: Pick<Save, 'doneTasks'>) => coreTaskIds(l).filter((id) => s.doneTasks[id]).length;
+
 export function levelProgress(l: Level, s: Save) {
   const ids = levelTaskIds(l);
   const done = ids.filter((id) => s.doneTasks[id]).length;
@@ -79,6 +83,6 @@ export function badges(s: Save) {
     { id: 'sprinter', icon: '⚡', name: 'Sprinter', desc: 'Complete 5 Sprinter Challenges', got: sprints >= 5 },
     { id: 'hattrick', icon: '🎩', name: 'Hat-trick', desc: 'Three games with 3 stars', got: threeStars >= 3 },
     { id: 'scout', icon: '🧭', name: 'Culture Scout', desc: `Open ${Math.min(8, SOURCES.length)} source files`, got: sources >= 8 },
-    { id: 'season', icon: '🏆', name: 'Full Season', desc: 'Win all 14 games', got: wins >= LEVELS.length },
+    { id: 'season', icon: '🏆', name: 'Full Season', desc: `Win all ${LEVELS.length} games`, got: wins >= LEVELS.length },
   ];
 }

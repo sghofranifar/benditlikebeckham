@@ -1,6 +1,6 @@
 # Bend It Quest
 
-A story-game companion app for reading **Bend It Like Beckham** by Narinder Dhami (Hodder, 2002) with a strong Year 7 (K07) class over **4 weeks**.
+A story-game companion app for reading **Bend It Like Beckham** by Narinder Dhami (Hodder, 2002) with a strong K07 class over **4 weeks**.
 
 Students use the app to **see tasks and play games**. **All writing happens in their notebooks.**
 
@@ -12,11 +12,14 @@ Students use the app to **see tasks and play games**. **All writing happens in t
 - 🔑 **Teacher panel** (key icon, top right). Master password: `beckham7`. It shows every chapter password, can unlock all levels (for demos) and can reset a device.
 - 🔔 **Call teacher** button on every screen.
 
-### The unlock loop
+### The unlock loop (anti-misuse)
 
-1. A student reads the chapter and completes the tasks in their notebook (Warm-Up → Vocab Drill → Match Play → Cool-Down → optional ⚡ Sprinter).
-2. They win the chapter's mini-game (≥ 60%), which earns stars, XP and character cards.
-3. They show you their notebook, and you tell them the **password for the next chapter**.
+1. The student enters their name once in Jess's room. **Only the teacher can change it** afterwards (Teacher panel → This device).
+2. They read the chapter and **tick every notebook task** (Warm-Up, Vocab, Match Play, Cool-Down). The **game stays locked** until all are ticked.
+3. They win the game and get a **completion code** (e.g. `L03-2-K7QF`) to copy into the notebook.
+4. You check the notebook and the code (Teacher panel → Student codes shows the correct code for that name and star count), then give them their **personal 4-letter unlock code** for the next chapter. It only works for that student's name, so sharing codes doesn't help anyone.
+
+Teacher panel: 🔑 icon, master password `beckham7`. Change the master password, `CODE_SECRET` (a new secret makes all old codes invalid) and the author details in `src/data/config.ts`.
 
 | Week | Levels |
 |---|---|
@@ -24,12 +27,14 @@ Students use the app to **see tasks and play games**. **All writing happens in t
 | 2 | Ch. 4–7 |
 | 3 | Ch. 8–10 |
 | 4 | Ch. 11–13 + Finale (Boss Match) |
+| Any time | Extra Time: Women's Football Today (research unit) |
 
-Passwords: Ch.1 open · Ch.2 `trial` · Ch.3 `boots` · Ch.4 `hmv` · Ch.5 `chiswick` · Ch.6 `predator` · Ch.7 `busstop` · Ch.8 `nairobi` · Ch.9 `hamburg` · Ch.10 `crossbar` · Ch.11 `bandstand` · Ch.12 `jaggo` · Ch.13 `freekick` · Finale `santaclara`
+Optional photos: see `img/README.md`.
 
 ## What's inside
 
-- **14 levels** (one per chapter + finale). Each has pre-, while- and post-reading tasks focused on comprehension, language analysis, themes and cultural background, plus 10 vocabulary words verified against the chapter text and a Sprinter challenge.
+- **Jess's 3D bedroom** as the start screen, with Jess as an original animated character who talks to the player.
+- **15 levels** (13 chapters + finale + Extra Time research unit). Each has pre-, while- and post-reading tasks focused on comprehension, language analysis, themes and cultural background, plus 10 vocabulary words verified against the chapter text and a Sprinter challenge.
 - **6 game engines**: Memory Match, Penalty Shoot-out (the ball bends!), Word Scramble, Sorting Game, Timeline, True/False Sprint.
 - **13 character cards**, **12 source files** (the Archive), Theme Tracker, XP ranks, badges, and a printable **Season Report**.
 - Chapter 10 contains a racist slur. The app never prints it and starts that chapter with a discussion-rules task.
@@ -50,3 +55,7 @@ npm run build   # writes index.html + docs/index.html (single file)
 ```
 
 Built with React, TypeScript, Tailwind CSS, Framer Motion (spring physics) and Zustand (state).
+
+## Licence
+
+© 2026 Sebastian Ghofranifar, German Swiss International School (GSIS), Hong Kong. Licensed under CC BY 4.0. See `LICENSE.md`.

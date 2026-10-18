@@ -2,7 +2,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useCallback, useState } from 'react';
 import { useGame } from '../store';
 import { levelById } from '../data/levels';
-import { levelProgress } from '../lib/progress';
+import { coreDone, coreTaskIds, levelProgress } from '../lib/progress';
 import { accentHex, spring } from '../lib/motion';
 import { LevelSign } from '../components/LevelSign';
 import { DialoguePanel } from '../components/DialoguePanel';
@@ -41,6 +41,10 @@ export function LevelScreen({ id }: { id: number }) {
     s.seeSign(id);
   }, [id, s]);
   const prog = levelProgress(level, s);
+  const need = coreTaskIds(level).length;
+  const have = coreDone(level, s);
+  const gameOpen = have >= need || s.teacherMode || (s.gameStars[id] ?? 0) > 0;
+  const num = level.id === 14 ? 'FT' : level.id === 15 ? 'XT' : String(level.id).padStart(2, '0');
 
   const tasks: Task[] = phase === 'pre' ? level.pre : phase === 'whilst' ? level.whilst : phase === 'post' ? level.post : phase === 'sprinter' ? [level.sprinter] : [];
 
@@ -53,6 +57,14 @@ export function LevelScreen({ id }: { id: number }) {
         <motion.button whileHover={{ x: -4 }} transition={spring.snappy} onClick={() => s.go({ name: 'hub' })} className="mb-6 text-xs font-extrabold uppercase tracking-[0.18em] text-chalk-dim hover:text-chalk">
           ◂ Season hub
         </motion.button>
+        <div className="mb-6 flex items-stretch overflow-hidden rounded-xl border border-white/10">
+          <div className="kit-stripes w-3 shrink-0 sm:w-6" />
+          <div className="font-teletext flex flex-1 flex-wrap items-center justify-between gap-x-4 bg-black/60 px-3 py-1.5 text-lg leading-tight sm:text-xl">
+            <span className="text-[#ffff00]">OFFICIAL MATCHDAY PROGRAMME</span>
+            <span className="text-[#00ffff]">SEASON 2001/02 · ISSUE {num}</span>
+            <span className="text-chalk-dim">HOUNSLOW HARRIERS · 50p</span>
+          </div>
+        </div>
         <div className="grid gap-6 lg:grid-cols-[1.3fr_1fr]">
           <div>
             <div className="flex flex-wrap items-center gap-2">
@@ -62,7 +74,7 @@ export function LevelScreen({ id }: { id: number }) {
             </div>
             <div className="mt-3 flex items-end gap-4">
               <span className="display text-[clamp(5rem,14vw,9rem)] leading-[0.8]" style={{ color: c }}>
-                {level.id === 14 ? 'FT' : String(level.id).padStart(2, '0')}
+                {num}
               </span>
               <h1 className="display t-hero pb-1">{level.title}</h1>
             </div>
@@ -80,6 +92,7 @@ export function LevelScreen({ id }: { id: number }) {
           </div>
           <div className="space-y-4">
             <DialoguePanel lines={level.commentator} accent={c} />
+            {level.stats && (
             <div className="glass p-5">
               <div className="mb-3 text-[0.68rem] font-extrabold uppercase tracking-[0.18em] text-chalk-dim">Jess at the end of this chapter</div>
               <div className="grid grid-cols-2 gap-x-5 gap-y-3">
@@ -89,6 +102,7 @@ export function LevelScreen({ id }: { id: number }) {
                 <StatBar label="Friends" value={level.stats.friendship} color="#ff4d8d" />
               </div>
             </div>
+            )}
           </div>
         </div>
       </section>
@@ -106,11 +120,14 @@ export function LevelScreen({ id }: { id: number }) {
             <motion.div className="h-full rounded-full" style={{ background: c }} animate={{ width: `${prog.pct * 100}%` }} transition={spring.soft} />
           </div>
         </div>
-        <div className="flex items-center gap-3">
-          <Stars n={s.gameStars[id] ?? 0} />
-          <SpringButton accent={c} onClick={() => s.go({ name: 'game', id })}>
-            🎮 Unlock game
-          </SpringButton>
+        <div className="flex flex-col items-start gap-1 sm:items-end">
+          <div className="flex items-center gap-3">
+            <Stars n={s.gameStars[id] ?? 0} />
+            <SpringButton accent={c} disabled={!gameOpen} onClick={() => s.go({ name: 'game', id })}>
+              {gameOpen ? '🎮 Play the game' : `🔒 Game: ${have}/${need} tasks`}
+            </SpringButton>
+          </div>
+          {!gameOpen && <span className="text-xs text-chalk-mute">Tick every Warm-Up, Vocab, Match Play and Cool-Down task first. Your teacher will check your notebook.</span>}
         </div>
       </section>
 

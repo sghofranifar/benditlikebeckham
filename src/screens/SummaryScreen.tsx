@@ -95,7 +95,7 @@ export function SummaryScreen() {
                 return (
                   <tr key={l.id} className="border-t border-white/5">
                     <td className="display py-2 pr-3 text-xl" style={{ color: accentHex[l.accent] }}>
-                      {l.id === 14 ? 'FT' : String(l.id).padStart(2, '0')}
+                      {l.id === 14 ? 'FT' : l.extra ? 'XT' : String(l.id).padStart(2, '0')}
                     </td>
                     <td className="py-2 pr-3 font-bold">{l.title}</td>
                     <td className="w-1/3 py-2 pr-3">

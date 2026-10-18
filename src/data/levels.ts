@@ -3,7 +3,7 @@ import type { Level } from '../types';
 // ─────────────────────────────────────────────────────────────
 // ONE LEVEL = ONE CHAPTER of Narinder Dhami's "Bend It Like Beckham" (Hodder, 2002).
 // Page numbers follow the Hodder paperback.
-// Teacher: change passwords here (or read them in the Teacher Panel in the app).
+// Unlocking: every locked level needs a PERSONAL code tied to the student's name (see src/lib/codes.ts).
 // All answers are written in the NOTEBOOK. The app only shows tasks and runs the games.
 // ─────────────────────────────────────────────────────────────
 
@@ -18,7 +18,7 @@ export const LEVELS: Level[] = [
     week: 1,
     setting: "Jess's bedroom · Southall Broadway · the park",
     accent: 'lime',
-    password: null,
+    open: true,
     themes: ['identity', 'family', 'dreams', 'gender'],
     commentator: [
       'Good evening and welcome to the season! Our rookie: Jess Bhamra from Hounslow. A-levels done, football on her mind.',
@@ -143,7 +143,6 @@ export const LEVELS: Level[] = [
     week: 1,
     setting: 'The park · Hounslow Harriers ground',
     accent: 'saffron',
-    password: 'trial',
     themes: ['dreams', 'gender', 'secrets'],
     commentator: [
       "Two goals in the park, and somebody is watching from the edge of the pitch...",
@@ -257,7 +256,6 @@ export const LEVELS: Level[] = [
     week: 1,
     setting: 'Changing-rooms · the pitch · the park · the living-room',
     accent: 'rose',
-    password: 'boots',
     themes: ['gender', 'family', 'identity', 'secrets'],
     commentator: [
       'Free boots! A Harriers shirt! And... a pair of tiny shorts. Uh-oh.',
@@ -374,7 +372,6 @@ export const LEVELS: Level[] = [
     week: 2,
     setting: 'The front path · Harriers ground · the changing-room',
     accent: 'sky',
-    password: 'hmv',
     themes: ['secrets', 'friendship', 'identity', 'prejudice'],
     commentator: [
       'A sports bag hidden in the flower border. A pretend job at HMV. Our rookie is living a double life.',
@@ -485,7 +482,6 @@ export const LEVELS: Level[] = [
     week: 2,
     setting: 'Home · Carnaby Street · a pub · training',
     accent: 'violet',
-    password: 'chiswick',
     themes: ['secrets', 'family', 'dreams', 'gender'],
     commentator: [
       'Last chapter ended on a cliffhanger: will Pinky give Jess away?',
@@ -600,7 +596,6 @@ export const LEVELS: Level[] = [
     week: 2,
     setting: "Jules's bedroom · the 120 bus stop · home",
     accent: 'rose',
-    password: 'predator',
     themes: ['prejudice', 'family', 'gender', 'secrets'],
     commentator: [
       "Jess visits Jules's house: posters of women footballers, a photo of Joe... and Mrs Paxton.",
@@ -712,7 +707,6 @@ export const LEVELS: Level[] = [
     week: 2,
     setting: 'The Bhamras\' living-room · Hamburg',
     accent: 'saffron',
-    password: 'busstop',
     themes: ['prejudice', 'family', 'dreams', 'secrets'],
     commentator: [
       "Joe is sitting in the Bhamras' living-room, drinking tea. Awkward doesn't even cover it.",
@@ -835,7 +829,6 @@ export const LEVELS: Level[] = [
     week: 3,
     setting: 'The hotel · a club in Hamburg · the minibus home',
     accent: 'violet',
-    password: 'nairobi',
     themes: ['friendship', 'identity', 'gender', 'secrets'],
     commentator: [
       'After the match: a phone call home full of fibs, and a makeover Jess never asked for.',
@@ -939,7 +932,6 @@ export const LEVELS: Level[] = [
     week: 3,
     setting: "Home · the clubhouse · Jules's bedroom",
     accent: 'sky',
-    password: 'hamburg',
     themes: ['family', 'friendship', 'identity', 'secrets'],
     commentator: [
       'No shouting. No yelling. Just silence. Sometimes silence is worse.',
@@ -1052,7 +1044,6 @@ export const LEVELS: Level[] = [
     week: 3,
     setting: 'The park bandstand · the semi-final v Millwall',
     accent: 'rose',
-    password: 'crossbar',
     themes: ['prejudice', 'friendship', 'identity', 'secrets'],
     commentator: [
       'Two huge moments in one chapter. First, Tony tells Jess something he has never told anyone.',
@@ -1168,7 +1159,6 @@ export const LEVELS: Level[] = [
     week: 4,
     setting: 'The car · home · the back garden · the jaggo night',
     accent: 'saffron',
-    password: 'bandstand',
     themes: ['family', 'identity', 'dreams'],
     commentator: [
       'A silent car journey. Then a surprise: the wedding is back on!',
@@ -1283,7 +1273,6 @@ export const LEVELS: Level[] = [
     week: 4,
     setting: 'The temple · the reception · the final v QPR · the doli',
     accent: 'lime',
-    password: 'jaggo',
     themes: ['family', 'dreams', 'friendship', 'identity'],
     commentator: [
       "Wedding day. Red and gold. And a bride who isn't supposed to smile.",
@@ -1396,7 +1385,6 @@ export const LEVELS: Level[] = [
     week: 4,
     setting: 'The living-room · the floodlit pitch · Heathrow',
     accent: 'sky',
-    password: 'freekick',
     themes: ['family', 'dreams', 'identity', 'secrets', 'friendship'],
     commentator: [
       'The final chapter. The wedding is over and the house is quiet.',
@@ -1515,7 +1503,6 @@ export const LEVELS: Level[] = [
     week: 4,
     setting: 'The trophy room',
     accent: 'lime',
-    password: 'santaclara',
     themes: ['identity', 'family', 'gender', 'prejudice', 'friendship', 'secrets', 'dreams'],
     commentator: [
       'FULL TIME! What a season, rookie.',
@@ -1565,7 +1552,7 @@ export const LEVELS: Level[] = [
         id: 'l14-post-1',
         focus: 'Creative',
         title: 'Book Review',
-        prompt: 'Write a review (200 words) for a Year 7 reader: plot without spoilers, best character, best moment, who should read it, and a star rating out of five.',
+        prompt: 'Write a review (200 words) for a K07 reader: plot without spoilers, best character, best moment, who should read it, and a star rating out of five.',
         minutes: 15,
       },
       {
@@ -1604,7 +1591,127 @@ export const LEVELS: Level[] = [
     },
     unlocksCards: [],
   },
+  // ════════════════════════ EXTRA TIME (bonus research unit) ════════════════════════
+  {
+    id: 15,
+    chapter: 'Extra Time',
+    title: "Women's Football Today",
+    tagline: "From Jules's complaint in 2002 to sold-out Wembley.",
+    pages: 'Research unit',
+    week: 4,
+    extra: true,
+    setting: 'The library · the internet · your notebook',
+    accent: 'violet',
+    themes: ['gender', 'dreams', 'prejudice'],
+    commentator: [
+      "Extra time! We're leaving 2002 and fast-forwarding to TODAY.",
+      'In Chapter Five, Jules said there was no money in the women\'s game in England. Was she right then? Is she still right now?',
+      "You are the journalist now. Research, check your sources, and bring the facts back to your notebook.",
+    ],
+    bookVoice: { text: "There's no money in the women's game over here.", ref: 'Ch. 5, p. 55' },
+    vocab: [
+      { word: 'professional', meaning: 'paid to do something as your full-time job', wordClass: 'adjective' },
+      { word: 'amateur', meaning: 'doing something for enjoyment, not as a paid job', wordClass: 'noun' },
+      { word: 'equality', meaning: 'the same rights and chances for everyone', wordClass: 'noun' },
+      { word: 'sponsorship', meaning: 'money a company pays to be linked with a person or team', wordClass: 'noun' },
+      { word: 'attendance', meaning: 'the number of people who come to an event', wordClass: 'noun' },
+      { word: 'salary', meaning: 'a fixed amount of money paid for a job, usually every month', wordClass: 'noun' },
+      { word: 'pay gap', meaning: 'the difference between what two groups are paid', wordClass: 'noun' },
+      { word: 'broadcast', meaning: 'to show something on TV, radio or online', wordClass: 'verb' },
+      { word: 'grassroots', meaning: 'the everyday, local level of a sport (schools, clubs, parks)', wordClass: 'noun' },
+      { word: 'campaign', meaning: 'a planned effort to achieve a change', wordClass: 'noun' },
+    ],
+    pre: [
+      {
+        id: 'l15-pre-1',
+        focus: 'Discussion',
+        title: 'Then: Jules in 2002',
+        prompt: 'Re-read the pub conversation in Chapter Five (pp. 55–56). List every complaint Jules makes about women\'s football in England (money, jobs, America, Mia Hamm…). Next to each one, predict: "changed" or "still true today"?',
+        quote: { text: "There's no money in the women's game over here.", ref: 'Ch. 5, p. 55' },
+        minutes: 8,
+      },
+      {
+        id: 'l15-pre-2',
+        focus: 'Culture',
+        title: 'Read the Briefing',
+        prompt: 'Open the source files "Women\'s Football Today" and "Research Like a Journalist". Copy the five-question source check into your notebook. You will use it in every research task.',
+        sourceId: 'wftoday',
+        minutes: 10,
+      },
+    ],
+    whilst: [
+      {
+        id: 'l15-while-1',
+        focus: 'Culture',
+        title: 'Research Mission 1: Player Profile',
+        prompt: 'Choose ONE current women\'s footballer (a Lioness, a player from Germany, Switzerland, Hong Kong or anywhere else). Create a fact file: club, position, achievements, how she started playing, one obstacle she faced. Record TWO sources (website name + date you looked).',
+        sourceId: 'research',
+        support: 'Name: … · Club: … · Position: … · She started playing when… · One obstacle she faced was… · Sources: 1) … 2) …',
+        sprinter: 'Compare her start in football with Jess\'s. What is similar? What has changed since 2002?',
+        minutes: 25,
+      },
+      {
+        id: 'l15-while-2',
+        focus: 'Theme',
+        title: 'Research Mission 2: Follow the Money',
+        prompt: 'Use the source file and your own research to make a "Then vs Now" table about MONEY: professional league, match fees for national teams, World Cup prize money, sponsorship. For each row, write the fact, the year and your source.',
+        sourceId: 'wftoday',
+        support: 'Row idea: World Cup prize money · Women 2023: … · Men 2022: … · Source: …',
+        sprinter: 'Maths link: what fraction of the men\'s prize money did the women\'s World Cup offer? Then explain THREE reasons why the gap might still exist (TV money, sponsorship, ticket sales, history).',
+        minutes: 25,
+      },
+      {
+        id: 'l15-while-3',
+        focus: 'Language',
+        title: 'Source Detective',
+        prompt: 'Check three of the sources you used with the five questions: Who wrote it? When? Why? What evidence? Can I find it somewhere else? Give each source a trust score out of 5 and explain your score.',
+        sourceId: 'research',
+        minutes: 15,
+      },
+    ],
+    post: [
+      {
+        id: 'l15-post-1',
+        focus: 'Creative',
+        title: 'A Letter to Jules',
+        prompt: 'Write a letter to Jules in 2002 from today (200 words). Tell her what has changed in women\'s football, what has NOT changed yet, and what she would be most surprised by. Use at least three facts from your research.',
+        support: 'Dear Jules, you won\'t believe this, but… · Sadly, some things haven\'t changed: … · You would love…',
+        minutes: 15,
+      },
+      {
+        id: 'l15-post-2',
+        focus: 'Discussion',
+        title: 'Debate Prep: Equal Pay?',
+        prompt: 'Prepare for a class debate: "Women footballers should be paid the same as men." Write three arguments FOR and three AGAINST, each with a piece of evidence. Then write your own opinion.',
+        minutes: 15,
+      },
+    ],
+    sprinter: {
+      id: 'l15-sprint',
+      focus: 'Creative',
+      title: '⚡ Equal Yet? Speech or Infographic',
+      prompt: 'Create EITHER a 300-word speech OR a hand-drawn infographic for your notebook with the title "Women\'s football: equal yet?". Use at least five statistics, cite every source, and end with a call to action.',
+      minutes: 35,
+    },
+    game: {
+      kind: 'timeline',
+      title: "Timeline: 130 Years of Women's Football",
+      events: [
+        '1895: First recorded women\'s match in England (British Ladies\' Football Club)',
+        '1920: Dick, Kerr Ladies play at Goodison Park in front of 53,000 fans',
+        '1921: The FA bans women\'s teams from its members\' grounds',
+        '1971: The ban is lifted after 50 years',
+        '1991: The first FIFA Women\'s World Cup is held in China',
+        '2002: Bend It Like Beckham (film and novel) comes out',
+        '2011: The FA Women\'s Super League (WSL) begins',
+        '2018: The WSL becomes fully professional',
+        '2020: England\'s women and men receive the same match fees',
+        '2022: The Lionesses win the Euros at Wembley',
+        '2025: England win the Euros again, in Switzerland',
+      ],
+    },
+    unlocksCards: [],
+  },
 ];
 
 export const levelById = (id: number) => LEVELS.find((l) => l.id === id)!;
-export const TEACHER_MASTER_PASSWORD = 'beckham7';

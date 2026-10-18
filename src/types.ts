@@ -59,13 +59,14 @@ export interface Level {
   tagline: string;
   pages: string;
   week: 1 | 2 | 3 | 4;
+  extra?: boolean; // bonus unit outside the chapter sequence
   setting: string;
   accent: 'lime' | 'saffron' | 'rose' | 'sky' | 'violet';
-  password: string | null; // null = open from the start
+  open?: boolean; // true = playable from the start; otherwise a personal unlock code is needed
   themes: ThemeId[];
   commentator: string[]; // in-app narrator lines (not from the book)
   bookVoice?: Quote;
-  stats: JessStats; // how Jess is doing at the END of this chapter
+  stats?: JessStats; // how Jess is doing at the END of this chapter
   vocab: VocabWord[];
   pre: Task[];
   whilst: Task[];
@@ -94,5 +95,6 @@ export interface Source {
   paragraphs: string[];
   facts?: string[];
   inTheNovel: string;
+  image?: { src: string; alt: string }; // optional photo the teacher can add (see img/README.md)
   thinkAbout: string;
 }

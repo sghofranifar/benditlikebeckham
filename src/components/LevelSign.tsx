@@ -34,7 +34,7 @@ export function LevelSign({ level, show, onDone }: { level: Level; show: boolean
             transition={{ ...spring.soft, delay: 0.1 }}
           />
           <motion.div className="relative text-[0.75rem] font-extrabold uppercase tracking-[0.45em]" style={{ color: c }} initial={{ y: -20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ ...spring.soft, delay: 0.05 }}>
-            {level.id === 14 ? 'Finale' : `Level ${String(level.id).padStart(2, '0')} · ${level.chapter}`}
+            {level.id === 14 ? 'Finale' : level.extra ? 'Bonus unit' : `Level ${String(level.id).padStart(2, '0')} · ${level.chapter}`}
           </motion.div>
           <motion.div
             className="display relative my-2 text-[clamp(7rem,30vw,22rem)]"
@@ -43,7 +43,7 @@ export function LevelSign({ level, show, onDone }: { level: Level; show: boolean
             animate={{ scale: 1, opacity: 1, rotate: -3 }}
             transition={{ ...spring.slam, delay: 0.15 }}
           >
-            {level.id === 14 ? 'FT' : String(level.id).padStart(2, '0')}
+            {level.id === 14 ? 'FT' : level.extra ? 'XT' : String(level.id).padStart(2, '0')}
           </motion.div>
           <motion.h2
             className="display t-hero relative"

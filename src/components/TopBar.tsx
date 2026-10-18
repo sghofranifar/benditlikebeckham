@@ -19,7 +19,7 @@ export function TopBar() {
     <>
       <header className="no-print sticky top-0 z-40 border-b border-white/[0.06] bg-ink-950/70 backdrop-blur-xl">
         <nav className="mx-auto flex h-16 max-w-7xl items-center gap-3 px-4 sm:px-6" aria-label="Main">
-          <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.95 }} transition={spring.snappy} onClick={() => s.go({ name: 'hub' })} className="display flex items-baseline gap-1 text-xl sm:text-2xl" aria-label="Season hub">
+          <motion.button whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.95 }} transition={spring.snappy} onClick={() => s.go({ name: 'room' })} className="display flex items-baseline gap-1 text-xl sm:text-2xl" aria-label="Back to Jess's room">
             <span className="text-lime">BEND</span>
             <span>IT</span>
             <span className="ml-1 hidden font-body text-[0.6rem] font-extrabold tracking-[0.25em] text-chalk-mute sm:inline">QUEST</span>
@@ -28,6 +28,7 @@ export function TopBar() {
           <div className="ml-2 hidden gap-1 md:flex">
             {(
               [
+                ['room', 'Room'],
                 ['hub', 'Season'],
                 ['squad', 'Squad'],
                 ['archive', 'Archive'],
@@ -52,13 +53,13 @@ export function TopBar() {
             <div className="hidden min-w-[150px] sm:block">
               <div className="flex justify-between text-[0.62rem] font-extrabold uppercase tracking-[0.16em]">
                 <span className="text-lime">{rank.name}</span>
-                <span className="tabular-nums text-chalk-dim">{xp} XP</span>
+                <span className="led text-base leading-none">{String(xp).padStart(4, '0')} XP</span>
               </div>
               <div className="mt-1 h-1.5 overflow-hidden rounded-full bg-white/10">
                 <motion.div className="h-full rounded-full bg-lime" animate={{ width: `${Math.round(rank.toNext * 100)}%` }} transition={spring.soft} />
               </div>
             </div>
-            <span className="rounded-full bg-lime/10 px-2.5 py-1 text-xs font-extrabold tabular-nums text-lime sm:hidden">{xp} XP</span>
+            <span className="led rounded-md bg-black/70 px-2 py-0.5 text-lg leading-none sm:hidden">{String(xp).padStart(4, '0')}</span>
 
             <motion.button whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} transition={spring.snappy} onClick={s.toggleSound} className="grid h-9 w-9 place-items-center rounded-full border border-white/10 bg-white/5 text-sm" aria-label={s.sound ? 'Mute sound' : 'Turn sound on'}>
               {s.sound ? '🔊' : '🔇'}
@@ -85,6 +86,7 @@ export function TopBar() {
         <div className="flex gap-1 overflow-x-auto px-3 pb-2 md:hidden">
           {(
             [
+              ['room', 'Room'],
               ['hub', 'Season'],
               ['squad', 'Squad'],
               ['archive', 'Archive'],

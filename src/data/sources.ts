@@ -1,6 +1,6 @@
 import type { Source } from '../types';
 
-// Cultural background "source files". Real-world context written for Year 7.
+// Cultural background "source files". Real-world context written for K07.
 // Each one ends by pointing back to the novel so students connect context to text.
 export const SOURCES: Source[] = [
   {
@@ -176,6 +176,44 @@ export const SOURCES: Source[] = [
     facts: ['Title IX: 1972', 'Santa Clara: California, USA'],
     inTheNovel: 'The scout offers Jess and Jules scholarships to Santa Clara (Ch. 12). Jules has a place at Loughborough; Jess is expected to go to Kingston University to become a solicitor.',
     thinkAbout: 'Why is America important in the novel? What does it represent for Jess and Jules?',
+  },
+  {
+    id: 'wftoday',
+    title: "Women's Football Today",
+    kicker: 'Extra Time · background',
+    icon: '🏟️',
+    paragraphs: [
+      'When the novel came out in 2002, women\'s football in England was mostly amateur. Players trained in the evenings and paid their own way, just as Jules complains. Since then, the game has changed enormously.',
+      'Going professional: the FA Women\'s Super League (WSL) started in 2011 and became fully professional in 2018. Top players now train full-time. Many players in lower leagues and in other countries are still part-time and have second jobs.',
+      'Pay: in 2020 the FA announced that England\'s women and men would receive the same match fees for playing for their country. In 2022 the US women\'s national team won an equal-pay agreement with US Soccer after a long legal fight. But the gap at the top is still huge: FIFA\'s total prize money for the 2023 Women\'s World Cup was 110 million US dollars, compared with 440 million for the men\'s World Cup in 2022. Club salaries for most women players are also far lower than for men.',
+      'Crowds and success: 87,192 fans watched England\'s Lionesses beat Germany in the Euro 2022 final at Wembley. In 2022, more than 91,000 people watched a women\'s match at Barcelona\'s Camp Nou. England reached the 2023 World Cup final (losing 1–0 to Spain) and won the Euros again in 2025 in Switzerland.',
+      'Still to do: equal access to football for girls at school and in clubs, more TV coverage and sponsorship, better facilities, and safe, respectful environments for players.',
+    ],
+    facts: [
+      'WSL founded 2011 · fully professional 2018',
+      'England equal match fees: 2020',
+      'US women equal-pay deal: 2022',
+      'Prize money: women 2023 $110m · men 2022 $440m',
+      'Euro 2022 final: 87,192 at Wembley',
+      'Euro 2025: England champions again',
+    ],
+    inTheNovel: 'Jules says there is "no money in the women\'s game over here" and that an England player drives a taxi to pay her way (Ch. 5). Jess and Jules have to go to America to play professionally (Ch. 12).',
+    thinkAbout: 'Figures change fast. These were correct in 2025. Check the date on everything you find, and update this table in your notebook with the newest facts you can find.',
+  },
+  {
+    id: 'research',
+    title: 'Research Like a Journalist',
+    kicker: 'Skills · source checking',
+    icon: '🔎',
+    paragraphs: [
+      'Good researchers do not believe the first thing they read. Before you use a fact, ask these five questions:',
+      '1. WHO wrote it? (An expert, a news organisation, a club, a fan, an advert?) 2. WHEN was it written? (Is the number still up to date?) 3. WHY was it written? (To inform, to sell, to persuade?) 4. What EVIDENCE does it give? (Numbers, quotes, links?) 5. Can I find the same fact SOMEWHERE ELSE?',
+      'Useful starting points: BBC Sport, The FA (thefa.com), FIFA (fifa.com), UEFA (uefa.com), national football associations (e.g. the Hong Kong Football Association, the German DFB, the Swiss SFV), and your school library.',
+      'Write facts in your own words, record the website name and the date you looked, and never copy whole paragraphs. If something seems surprising or upsetting, check with your teacher.',
+    ],
+    facts: ['Who? · When? · Why? · Evidence? · Elsewhere?', 'Always note: website + date', 'Own words, not copy-paste'],
+    inTheNovel: 'Jess only learns that women can play professionally because Jules tells her (Ch. 2) and shows her a video (Ch. 6). Information changes what people believe is possible.',
+    thinkAbout: 'Why do you think Jess had never heard of the Hounslow Harriers girls\' side or the American pro league?',
   },
 ];
 

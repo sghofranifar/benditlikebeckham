@@ -7,7 +7,7 @@ import { persist, createJSONStorage } from 'zustand/middleware';
 // ─────────────────────────────────────────────────────────────
 
 export type Screen =
-  | { name: 'start' }
+  | { name: 'room' }
   | { name: 'hub' }
   | { name: 'level'; id: number }
   | { name: 'game'; id: number }
@@ -28,7 +28,8 @@ interface GameState {
   sound: boolean;
   teacherMode: boolean;
 
-  setName: (n: string) => void;
+  setName: (n: string) => void; // only works once: the name is then locked
+  forceName: (n: string) => void; // teacher only
   go: (s: Screen) => void;
   toggleTask: (id: string) => void;
   winGame: (levelId: number, stars: number) => void;
@@ -42,7 +43,7 @@ interface GameState {
 
 const fresh = {
   playerName: '',
-  screen: { name: 'start' } as Screen,
+  screen: { name: 'room' } as Screen,
   unlocked: [1],
   doneTasks: {},
   gameStars: {},
@@ -56,7 +57,8 @@ export const useGame = create<GameState>()(
   persist(
     (set) => ({
       ...fresh,
-      setName: (playerName) => set({ playerName }),
+      setName: (playerName) => set((s) => (s.playerName ? s : { playerName })),
+      forceName: (playerName) => set({ playerName }),
       go: (screen) => {
         set({ screen });
         if (typeof window !== 'undefined') window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });

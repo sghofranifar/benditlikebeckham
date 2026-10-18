@@ -5,6 +5,8 @@ import { levelById, LEVELS } from '../data/levels';
 import { characterById } from '../data/characters';
 import { accentHex, spring } from '../lib/motion';
 import { play } from '../lib/sound';
+import { completionCode } from '../lib/codes';
+import { coreDone, coreTaskIds } from '../lib/progress';
 import { SpringButton, Stars } from '../components/ui';
 import { MemoryMatch } from '../games/MemoryMatch';
 import { KickQuiz } from '../games/KickQuiz';
@@ -32,6 +34,19 @@ export function GameScreen({ id }: { id: number }) {
   };
 
   const nextLevel = LEVELS.find((l) => l.id === id + 1);
+  // Direct navigation guard: the game needs all core notebook tasks ticked.
+  if (coreDone(level, s) < coreTaskIds(level).length && !s.teacherMode && !(s.gameStars[id] > 0)) {
+    return (
+      <main className="mx-auto max-w-xl px-4 py-24 text-center">
+        <div className="text-5xl">🔒</div>
+        <h1 className="display t-h1 mt-3">Game locked</h1>
+        <p className="mt-2 text-chalk-dim">Finish and tick all the notebook tasks for this chapter first.</p>
+        <SpringButton className="mt-6" onClick={() => s.go({ name: 'level', id })}>
+          Back to the tasks
+        </SpringButton>
+      </main>
+    );
+  }
   const gameProps = { onFinish: finish, accent: c };
 
   return (
@@ -71,13 +86,17 @@ export function GameScreen({ id }: { id: number }) {
               {result > 0 ? (
                 <>
                   <p className="mt-3 text-chalk-dim">+{result * 25} XP</p>
+                  <div className="mt-4 rounded-2xl border border-saffron/40 bg-black/50 p-3">
+                    <div className="text-[0.65rem] font-extrabold uppercase tracking-[0.18em] text-saffron">✏️ Copy this completion code into your notebook</div>
+                    <div className="led mt-1 text-4xl tracking-widest">{completionCode(s.playerName, id, result)}</div>
+                  </div>
                   {level.unlocksCards.length > 0 && (
                     <div className="mt-4 rounded-2xl border border-white/10 bg-white/5 p-3 text-sm">
                       🃏 New squad card{level.unlocksCards.length > 1 ? 's' : ''}: <b>{level.unlocksCards.map((k) => characterById(k).name).join(', ')}</b>
                     </div>
                   )}
                   <p className="mt-4 text-sm text-chalk-dim">
-                    {nextLevel ? `Finish your notebook tasks, then ask your teacher for the ${nextLevel.chapter} password.` : 'Season complete! Open your Season Report.'}
+                    {nextLevel && !nextLevel.extra ? `Show your teacher your notebook (with the code) to get your personal code for ${nextLevel.chapter}.` : 'Great work! Open your Season Report.'}
                   </p>
                 </>
               ) : (

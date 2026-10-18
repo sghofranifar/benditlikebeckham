@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { Modal } from './Modal';
 import { sourceById } from '../data/sources';
 import { useGame } from '../store';
+import { OptionalImg } from './OptionalImg';
 
 // "Source file" window: cultural background, then a bridge back into the novel.
 export function SourceModal({ id, onClose }: { id: string | null; onClose: () => void }) {
@@ -22,6 +23,7 @@ export function SourceModal({ id, onClose }: { id: string | null; onClose: () =>
             <span className="mr-3">{src.icon}</span>
             {src.title}
           </h2>
+          <OptionalImg key={src.id} src={src.image?.src ?? `img/source-${src.id}.jpg`} alt={src.image?.alt ?? src.title} className="mb-5 aspect-video w-full rounded-2xl object-cover" />
           <div className="space-y-3 leading-relaxed text-chalk/90">
             {src.paragraphs.map((p, i) => (
               <p key={i}>{p}</p>
