@@ -20,6 +20,10 @@ export const LICENCE = {
 // Master password for the Teacher Panel (🔑 icon).
 export const TEACHER_MASTER_PASSWORD = 'beckham7';
 
+// Shared class code: every student can log in with their first name + this code.
+// It opens Chapter 1 only. All later codes (Chapters 2–5 onwards) stay personal.
+export const CLASS_CODE = 'JESS7';
+
 // Secret mixed into every personal unlock / completion code.
 // Change it for a new class or a new school year: all old codes stop working.
 export const CODE_SECRET = 'gsis-k07-bilb-2026';

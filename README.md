@@ -14,7 +14,7 @@ Students use the app to **see tasks and play games**. **All writing happens in t
 
 ### Logins and unlock codes
 
-1. Each student logs in once per device in Jess's room with **first name + personal password** (from their login card).
+1. Each student logs in once per device in Jess's room with their **first name** + the shared **class code `JESS7`** (or their personal password). This opens Chapter 1. Change the class code in `src/data/config.ts` (`CLASS_CODE`).
 2. **Chapter 1** is always open after login. **Code 1** opens Chapters 2–5. **Codes 2–6** each open two more levels (6–7, 8–9, 10–11, 12–13, Finale + Extra Time). A code also opens every earlier stage, so on a new device the student only needs their latest code.
 3. A chapter's game opens once all its notebook tasks are ticked. Winning shows a **completion code** to copy into the notebook; the Teacher panel shows the correct one.
 4. All codes are personal: they only work with that student's name.
