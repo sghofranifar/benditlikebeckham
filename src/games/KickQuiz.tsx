@@ -5,7 +5,8 @@ import { play } from '../lib/sound';
 import { starsFromScore, type GameProps } from './shared';
 
 // Penalty / free-kick quiz: each answer is a target in the goal.
-// Pick one → the ball BENDS along a curved path. Right = GOAL, wrong = keeper saves.
+// Pick an answer (button or target letter) → the ball BENDS along a curved path. Right = GOAL, wrong = keeper saves.
+const LETTERS = ['A', 'B', 'C', 'D'];
 const TARGETS = [
   { x: 18, y: 26 },
   { x: 82, y: 26 },
@@ -42,6 +43,11 @@ export function KickQuiz({ spec, onFinish, accent }: GameProps<'kick'>) {
   };
 
   const t = picked !== null ? TARGETS[picked] : null;
+  const stateOf = (i: number) => (picked === null ? 'idle' : i === q.answer ? 'right' : i === picked ? 'wrong' : 'dim');
+  const stateStyle = (st: string) => ({
+    borderColor: st === 'right' ? accent : st === 'wrong' ? '#ff4d8d' : 'rgba(255,255,255,.2)',
+    background: st === 'right' ? `${accent}30` : st === 'wrong' ? '#ff4d8d26' : 'rgba(7,9,15,.55)',
+  });
 
   return (
     <div>
@@ -63,29 +69,25 @@ export function KickQuiz({ spec, onFinish, accent }: GameProps<'kick'>) {
 
       {/* The goal */}
       <div className="relative mx-auto aspect-[16/9] w-full max-w-2xl overflow-hidden rounded-t-xl border-x-4 border-t-4 border-white/80 bg-[repeating-linear-gradient(0deg,rgba(255,255,255,.06)_0_1px,transparent_1px_18px),repeating-linear-gradient(90deg,rgba(255,255,255,.06)_0_1px,transparent_1px_18px)]">
-        {q.options.map((opt, i) => {
-          const state = picked === null ? 'idle' : i === q.answer ? 'right' : i === picked ? 'wrong' : 'dim';
+        {/* Target markers A–D (the answers themselves are in the grid below the goal) */}
+        {TARGETS.map((tg, i) => {
+          const state = stateOf(i);
           return (
             <motion.button
-              key={`${qi}-${i}`}
+              key={`${qi}-t${i}`}
               type="button"
+              aria-label={`Shoot at ${LETTERS[i]}: ${q.options[i]}`}
               disabled={picked !== null}
               onClick={() => shoot(i)}
-              className="absolute flex w-[42%] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-2xl border px-2 py-2.5 text-center text-[0.78rem] font-bold leading-tight backdrop-blur-sm sm:text-sm"
-              style={{
-                left: `${TARGETS[i].x}%`,
-                top: `${TARGETS[i].y}%`,
-                borderColor: state === 'right' ? accent : state === 'wrong' ? '#ff4d8d' : 'rgba(255,255,255,.2)',
-                background: state === 'right' ? `${accent}30` : state === 'wrong' ? '#ff4d8d26' : 'rgba(7,9,15,.55)',
-                opacity: state === 'dim' ? 0.35 : 1,
-              }}
-              initial={{ scale: 0.8, opacity: 0 }}
+              className="display absolute grid h-12 w-12 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border-2 text-2xl sm:h-16 sm:w-16 sm:text-3xl"
+              style={{ left: `${tg.x}%`, top: `${tg.y}%`, ...stateStyle(state), opacity: state === 'dim' ? 0.35 : 1 }}
+              initial={{ scale: 0.6, opacity: 0 }}
               animate={{ scale: 1, opacity: state === 'dim' ? 0.35 : 1 }}
-              whileHover={picked === null ? { scale: 1.06 } : {}}
-              whileTap={{ scale: 0.95 }}
+              whileHover={picked === null ? { scale: 1.12 } : {}}
+              whileTap={{ scale: 0.92 }}
               transition={{ ...spring.bouncy, delay: picked === null ? i * 0.05 : 0 }}
             >
-              {opt}
+              {LETTERS[i]}
             </motion.button>
           );
         })}
@@ -122,6 +124,31 @@ export function KickQuiz({ spec, onFinish, accent }: GameProps<'kick'>) {
         </AnimatePresence>
       </div>
       <div className="mx-auto h-1 max-w-2xl bg-white/30" />
+
+      {/* Answer grid: always fully visible, wraps long answers */}
+      <div className="mx-auto mt-4 grid max-w-2xl gap-2 sm:grid-cols-2">
+        {q.options.map((opt, i) => {
+          const state = stateOf(i);
+          return (
+            <motion.button
+              key={`${qi}-${i}`}
+              type="button"
+              disabled={picked !== null}
+              onClick={() => shoot(i)}
+              className="flex items-center gap-3 rounded-2xl border px-3 py-3 text-left text-sm font-bold leading-snug sm:text-[0.95rem]"
+              style={{ ...stateStyle(state), opacity: state === 'dim' ? 0.4 : 1 }}
+              initial={{ y: 10, opacity: 0 }}
+              animate={{ y: 0, opacity: state === 'dim' ? 0.4 : 1 }}
+              whileHover={picked === null ? { scale: 1.02, y: -2 } : {}}
+              whileTap={{ scale: 0.97 }}
+              transition={{ ...spring.snappy, delay: picked === null ? i * 0.04 : 0 }}
+            >
+              <span className="display grid h-8 w-8 shrink-0 place-items-center rounded-full bg-white/10 text-lg">{LETTERS[i]}</span>
+              <span>{opt}</span>
+            </motion.button>
+          );
+        })}
+      </div>
 
       <div className="mx-auto mt-4 min-h-[5.5rem] max-w-2xl">
         <AnimatePresence mode="wait">
