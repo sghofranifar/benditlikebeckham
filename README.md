@@ -9,15 +9,17 @@ Students use the app to **see tasks and play games**. **All writing happens in t
 - **Live site:** https://sghofranifar.github.io/benditlikebeckham/
 - **Offline:** open `index.html` (or `docs/index.html`) in any browser (iPad, laptop, Chromebook). It is one self-contained file and works offline. Only the fonts load from the internet.
 - Progress is saved **in that browser on that device**.
-- 🔑 **Teacher panel** (key icon, top right). Master password: `beckham7`. It shows every chapter password, can unlock all levels (for demos) and can reset a device.
+- 🔑 **Teacher panel** (key icon, top right). Master password: `beckham7`. Type a name to see that student's password and codes; it can also unlock all levels (for demos) and reset a device.
 - 🔔 **Call teacher** button on every screen.
 
-### The unlock loop (anti-misuse)
+### Logins and unlock codes
 
-1. The student enters their name once in Jess's room. **Only the teacher can change it** afterwards (Teacher panel → This device).
-2. They read the chapter and **tick every notebook task** (Warm-Up, Vocab, Match Play, Cool-Down). The **game stays locked** until all are ticked.
-3. They win the game and get a **completion code** (e.g. `L03-2-K7QF`) to copy into the notebook.
-4. You check the notebook and the code (Teacher panel → Student codes shows the correct code for that name and star count), then give them their **personal 4-letter unlock code** for the next chapter. It only works for that student's name, so sharing codes doesn't help anyone.
+1. Each student logs in once per device in Jess's room with **first name + personal password** (from their login card).
+2. **Code 1** opens Chapters 1–5. **Codes 2–6** each open two more levels (6–7, 8–9, 10–11, 12–13, Finale + Extra Time). A code also opens every earlier stage, so on a new device the student only needs their latest code.
+3. A chapter's game opens once all its notebook tasks are ticked. Winning shows a **completion code** to copy into the notebook; the Teacher panel shows the correct one.
+4. All codes are personal: they only work with that student's name.
+
+**Class sheet (private):** put names (one per line) in `class/names.txt`, then run `npm run class-sheet`. It writes `class/class-sheet.html` (overview, login cards, code strips) and `class/class-codes.csv`. The `class/` folder is git-ignored: student names never go into the public app or repository.
 
 Teacher panel: 🔑 icon, master password `beckham7`. Change the master password, `CODE_SECRET` (a new secret makes all old codes invalid) and the author details in `src/data/config.ts`.
 
@@ -42,7 +44,8 @@ Optional photos: see `img/README.md`.
 ## Edit content
 
 All content is plain data in `src/data/`:
-- `levels.ts`: tasks, vocab, quotes, games, passwords
+- `levels.ts`: tasks, vocab, quotes, games
+- `../lib/codes.ts`: unlock stages (which chapters each code opens)
 - `characters.ts`: squad cards
 - `sources.ts`: cultural background
 

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Modal } from './Modal';
 import { LEVELS } from '../data/levels';
 import { TEACHER_MASTER_PASSWORD } from '../data/config';
-import { completionCode, unlockCode } from '../lib/codes';
+import { STAGES, completionCode, loginCode, stageCode } from '../lib/codes';
 import { useGame } from '../store';
 import { SpringButton } from './ui';
 
@@ -64,7 +64,7 @@ export function TeacherPanel({ open, onClose }: { open: boolean; onClose: () => 
           {tab === 'codes' ? (
             <>
               <p className="mb-3 text-sm text-chalk-dim">
-                Every code belongs to <b>one student name</b>. Type the name exactly as the student entered it (capitals and spaces don't matter). <b>Unlock code</b>: give it after checking the notebook. <b>Completion codes</b>: the app shows one after a game is won. Compare it with the code in the student's notebook to check the result is genuine.
+                Every code belongs to <b>one student name</b>. Type the name exactly as the student entered it (capitals and spaces don't matter). <b>Login password</b>: needed once per device. <b>Codes 1–6</b>: Code 1 opens Chapters 1–5, each later code opens two more levels (and all earlier ones). <b>Completion codes</b>: the app shows one after a game is won. Compare it with the code in the student's notebook to check the result is genuine.
               </p>
               <input
                 value={student}
@@ -74,13 +74,23 @@ export function TeacherPanel({ open, onClose }: { open: boolean; onClose: () => 
                 className="mb-4 w-full max-w-sm rounded-2xl border border-white/15 bg-white/5 px-4 py-3 font-bold outline-none focus:border-lime"
               />
               {student.trim() && (
+                <>
+                <div className="mb-4 grid gap-2 sm:grid-cols-2">
+                  <div className="rounded-2xl border border-lime/30 bg-lime/[0.06] p-3 text-sm">
+                    Login password: <code className="ml-1 font-bold tracking-widest text-lime">{loginCode(student)}</code>
+                  </div>
+                  {STAGES.map((st, i) => (
+                    <div key={st.label} className="rounded-2xl border border-white/10 p-3 text-sm">
+                      Code {i + 1} · {st.label}: <code className="ml-1 rounded bg-saffron/15 px-2 py-0.5 font-bold tracking-widest text-saffron">{stageCode(student, i)}</code>
+                    </div>
+                  ))}
+                </div>
                 <div className="overflow-x-auto rounded-2xl border border-white/10">
                   <table className="w-full text-left text-sm">
                     <thead className="bg-white/5 text-[0.65rem] uppercase tracking-[0.16em] text-chalk-dim">
                       <tr>
                         <th className="px-3 py-2">Lvl</th>
                         <th className="px-3 py-2">Chapter</th>
-                        <th className="px-3 py-2">Unlock code</th>
                         <th className="px-3 py-2">Completion codes ★ / ★★ / ★★★</th>
                       </tr>
                     </thead>
@@ -91,13 +101,13 @@ export function TeacherPanel({ open, onClose }: { open: boolean; onClose: () => 
                           <td className="px-3 py-2">
                             {l.chapter}: {l.title}
                           </td>
-                          <td className="px-3 py-2">{l.open ? <span className="text-chalk-mute">open</span> : <code className="rounded bg-saffron/15 px-2 py-0.5 font-bold tracking-widest text-saffron">{unlockCode(student, l.id)}</code>}</td>
                           <td className="px-3 py-2 font-mono text-xs text-chalk-dim">{[1, 2, 3].map((n) => completionCode(student, l.id, n)).join('  ')}</td>
                         </tr>
                       ))}
                     </tbody>
                   </table>
                 </div>
+                </>
               )}
               <p className="mt-3 text-xs text-chalk-mute">Tip: print this table once per student, or open it on your own device during lessons. Change CODE_SECRET in src/data/config.ts for a new class: all old codes stop working.</p>
             </>

@@ -9,6 +9,7 @@ import { play } from '../lib/sound';
 import { JessSprite } from '../components/JessSprite';
 import { OptionalImg } from '../components/OptionalImg';
 import { LicenceButton } from '../components/Licence';
+import { loginCode, sameCode } from '../lib/codes';
 
 // ─────────────────────────────────────────────────────────────
 // The starting point: Jess's bedroom in 3D (pure CSS 3D, runs on iPads).
@@ -37,7 +38,7 @@ export function RoomScreen() {
         "I'm Jess. Well, Jesminder, if you're my mum.",
         'Welcome to my room in Hounslow. The planes from Heathrow fly right over us, and my posters drive Mum mad.',
         "I've got a story to tell you: thirteen chapters of it. Every chapter is a level in this game.",
-        "But first: what's your name? Choose carefully, because only your teacher can change it later!",
+        "But first: log in with your first name and the password your teacher gave you.",
       ];
   const [lines, setLines] = useState<Line[]>(intro);
   const [inIntro, setInIntro] = useState(true);
@@ -45,6 +46,8 @@ export function RoomScreen() {
   const [shown, setShown] = useState(0);
   const [askName, setAskName] = useState(false);
   const [name, setName] = useState('');
+  const [pw, setPw] = useState('');
+  const [loginErr, setLoginErr] = useState('');
   const [hint, setHint] = useState<Action | null>(null);
   const [waving, setWaving] = useState(true);
   const line = (lines[li] ?? '').replace('{name}', s.playerName);
@@ -80,6 +83,12 @@ export function RoomScreen() {
   const submitName = () => {
     const n = name.trim();
     if (!n) return;
+    if (!sameCode(pw, loginCode(n))) {
+      play('bad');
+      setLoginErr("Hmm, that name and password don't match. Check your card from your teacher (spelling counts!).");
+      return;
+    }
+    setLoginErr('');
     s.setName(n);
     setAskName(false);
     setWaving(true);
@@ -215,11 +224,15 @@ export function RoomScreen() {
 
         <AnimatePresence mode="wait">
           {askName ? (
-            <motion.form key="name" className="mt-3 flex gap-2" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={spring.snappy} onSubmit={(e) => { e.preventDefault(); submitName(); }}>
-              <motion.input autoFocus value={name} onChange={(e) => setName(e.target.value)} maxLength={24} placeholder="Your first and last name" aria-label="Your name" whileFocus={{ scale: 1.02 }} transition={spring.snappy} className="min-w-0 flex-1 rounded-full border border-white/15 bg-ink-950/70 px-5 py-3 font-bold outline-none focus:border-lime focus:shadow-glow" />
-              <motion.button type="submit" disabled={!name.trim()} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.94 }} transition={spring.snappy} className="rounded-full bg-lime px-5 font-extrabold uppercase text-ink-950 disabled:opacity-40">
-                That's me ▸
-              </motion.button>
+            <motion.form key="name" className="mt-3" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={spring.snappy} onSubmit={(e) => { e.preventDefault(); submitName(); }}>
+              <div className="flex flex-col gap-2 sm:flex-row">
+                <motion.input autoFocus value={name} onChange={(e) => setName(e.target.value)} maxLength={24} placeholder="First name" aria-label="Your name" autoComplete="off" whileFocus={{ scale: 1.02 }} transition={spring.snappy} className="min-w-0 flex-1 rounded-full border border-white/15 bg-ink-950/70 px-5 py-3 font-bold outline-none focus:border-lime focus:shadow-glow" />
+                <motion.input value={pw} onChange={(e) => setPw(e.target.value)} maxLength={8} placeholder="Password" aria-label="Your password" autoComplete="off" autoCapitalize="characters" whileFocus={{ scale: 1.02 }} transition={spring.snappy} className="min-w-0 flex-1 rounded-full border border-white/15 bg-ink-950/70 px-5 py-3 font-bold uppercase tracking-widest outline-none focus:border-lime focus:shadow-glow" />
+                <motion.button type="submit" disabled={!name.trim() || !pw.trim()} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.94 }} transition={spring.snappy} className="rounded-full bg-lime px-5 py-3 font-extrabold uppercase text-ink-950 disabled:opacity-40">
+                  Log in ▸
+                </motion.button>
+              </div>
+              <div className="mt-2 min-h-[1.25rem] text-sm text-rose">{loginErr}</div>
             </motion.form>
           ) : typing || !lastLine ? (
             <motion.button key="next" onClick={advance} className="mt-2 text-xs font-extrabold uppercase tracking-[0.18em] text-chalk-dim hover:text-chalk" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>

@@ -9,7 +9,7 @@ import { Reveal, SpringButton, Stars, StatBar } from '../components/ui';
 import { Modal } from '../components/Modal';
 import { CHARACTERS } from '../data/characters';
 import type { Level } from '../types';
-import { sameCode, unlockCode } from '../lib/codes';
+import { STAGES, levelsUpToStage, stageForCode } from '../lib/codes';
 import { IMAGES } from '../data/config';
 import { OptionalImg } from '../components/OptionalImg';
 
@@ -300,13 +300,14 @@ function UnlockModal({ level, onClose }: { level: Level | null; onClose: () => v
   const [shake, setShake] = useState(0);
   const tryIt = () => {
     if (!level) return;
-    if (sameCode(pw, unlockCode(playerName, level.id))) {
+    const stage = stageForCode(playerName, pw);
+    if (stage >= 0) {
       play('unlock');
-      unlock(level.id);
+      levelsUpToStage(stage).forEach((id) => unlock(id));
       setPw('');
       setErr('');
       onClose();
-      go({ name: 'level', id: level.id });
+      if (levelsUpToStage(stage).includes(level.id)) go({ name: 'level', id: level.id });
     } else {
       play('bad');
       setErr(`That code doesn't work for ${playerName}. Codes are personal: show your notebook to your teacher to get yours.`);
@@ -321,7 +322,7 @@ function UnlockModal({ level, onClose }: { level: Level | null; onClose: () => v
           <h2 className="display t-h1 mt-2">
             {level.chapter}: {level.title}
           </h2>
-          <p className="mt-2 text-chalk-dim">Finish the previous chapter in your notebook and show it to your teacher. You'll get a <b>4-letter code</b> that only works for <b>{playerName}</b>.</p>
+          <p className="mt-2 text-chalk-dim">Finish the previous chapter in your notebook and show it to your teacher. You'll get a <b>4-character code</b> that only works for <b>{playerName}</b>. This chapter is part of: <b>{STAGES.find((st) => st.levels.includes(level.id))?.label}</b>.</p>
           <motion.div key={shake} animate={shake ? { x: [0, -12, 12, -8, 8, 0] } : {}} transition={{ duration: 0.4 }} className="mt-5 flex gap-2">
             <motion.input
               value={pw}
