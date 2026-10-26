@@ -21,7 +21,7 @@ const cards = names
   .map(
     (n) => `<div class="card"><div class="t">BEND IT QUEST · K07</div><div class="nm">${esc(n)}</div>
 <div class="lg">Name: <b>${esc(n)}</b> &nbsp; Password: <b class="pw">${loginCode(n)}</b></div>
-<p class="hint">Log in in Jess's room. Keep this card secret. Your unlock codes come from your teacher.</p></div>`,
+<p class="hint">Log in in Jess's room. Chapter 1 is open straight away. Keep this card secret. Your unlock codes come from your teacher.</p></div>`,
   )
   .join('');
 

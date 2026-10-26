@@ -64,7 +64,7 @@ export function TeacherPanel({ open, onClose }: { open: boolean; onClose: () => 
           {tab === 'codes' ? (
             <>
               <p className="mb-3 text-sm text-chalk-dim">
-                Every code belongs to <b>one student name</b>. Type the name exactly as the student entered it (capitals and spaces don't matter). <b>Login password</b>: needed once per device. <b>Codes 1–6</b>: Code 1 opens Chapters 1–5, each later code opens two more levels (and all earlier ones). <b>Completion codes</b>: the app shows one after a game is won. Compare it with the code in the student's notebook to check the result is genuine.
+                Every code belongs to <b>one student name</b>. Type the name exactly as the student entered it (capitals and spaces don't matter). <b>Login password</b>: needed once per device. <b>Codes 1–6</b>: Chapter 1 is always open. Code 1 opens Chapters 2–5, each later code opens two more levels (and all earlier ones). <b>Completion codes</b>: the app shows one after a game is won. Compare it with the code in the student's notebook to check the result is genuine.
               </p>
               <input
                 value={student}

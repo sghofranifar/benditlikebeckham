@@ -28,11 +28,12 @@ function hash4(input: string) {
 export const loginCode = (name: string) => hash4(`${CODE_SECRET}|login|${normaliseName(name)}`) + hash4(`${CODE_SECRET}|login2|${normaliseName(name)}`).slice(0, 2);
 
 /**
- * Unlock stages. Code 1 opens Chapters 1–5 (holiday reading); every later code opens two more levels.
+ * Unlock stages. Chapter 1 is always open after login. Code 1 opens Chapters 2–5 (holiday reading);
+ * every later code opens two more levels.
  * A code also opens every EARLIER stage, so a student on a new device only needs their latest code.
  */
 export const STAGES: { label: string; levels: number[] }[] = [
-  { label: 'Chapters 1–5', levels: [1, 2, 3, 4, 5] },
+  { label: 'Chapters 2–5', levels: [2, 3, 4, 5] },
   { label: 'Chapters 6–7', levels: [6, 7] },
   { label: 'Chapters 8–9', levels: [8, 9] },
   { label: 'Chapters 10–11', levels: [10, 11] },
