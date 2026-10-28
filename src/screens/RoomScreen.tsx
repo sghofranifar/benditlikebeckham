@@ -9,7 +9,7 @@ import { play } from '../lib/sound';
 import { JessSprite } from '../components/JessSprite';
 import { OptionalImg } from '../components/OptionalImg';
 import { LicenceButton } from '../components/Licence';
-import { loginCode, sameCode } from '../lib/codes';
+import { levelsUpToStage, loginCode, sameCode } from '../lib/codes';
 import { CLASS_CODE } from '../data/config';
 
 // ─────────────────────────────────────────────────────────────
@@ -91,6 +91,7 @@ export function RoomScreen() {
     }
     setLoginErr('');
     s.setName(n);
+    if (sameCode(pw, CLASS_CODE)) levelsUpToStage(0).forEach((id) => s.unlock(id));
     setAskName(false);
     setWaving(true);
     setTimeout(() => setWaving(false), 1900);

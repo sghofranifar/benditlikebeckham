@@ -1,4 +1,4 @@
-import { CODE_SECRET } from '../data/config';
+import { CLASS_CODE, CODE_SECRET } from '../data/config';
 
 // Personal codes: each code only works for ONE student name, so sharing codes is pointless.
 // FNV-1a hash → 4 characters from an alphabet without look-alikes (no 0/O, 1/I).
@@ -28,7 +28,8 @@ function hash4(input: string) {
 export const loginCode = (name: string) => hash4(`${CODE_SECRET}|login|${normaliseName(name)}`) + hash4(`${CODE_SECRET}|login2|${normaliseName(name)}`).slice(0, 2);
 
 /**
- * Unlock stages. Chapter 1 is always open after login. Code 1 opens Chapters 2–5 (holiday reading);
+ * Unlock stages. Chapter 1 is always open after login. Stage 1 (Chapters 2–5) opens with the shared CLASS_CODE
+ * or the personal Code 1;
  * every later code opens two more levels.
  * A code also opens every EARLIER stage, so a student on a new device only needs their latest code.
  */
@@ -45,7 +46,8 @@ export const STAGES: { label: string; levels: number[] }[] = [
 export const stageCode = (name: string, stage: number) => hash4(`${CODE_SECRET}|stage|${normaliseName(name)}|${stage}`);
 
 /** Which stage (0-based) does this code open for this student? -1 = none. */
-export const stageForCode = (name: string, code: string) => STAGES.findIndex((_, i) => sameCode(code, stageCode(name, i)));
+export const stageForCode = (name: string, code: string) =>
+  sameCode(code, CLASS_CODE) ? 0 : STAGES.findIndex((_, i) => sameCode(code, stageCode(name, i)));
 
 /** All levels opened by a stage, including every earlier stage. */
 export const levelsUpToStage = (stage: number) => STAGES.slice(0, stage + 1).flatMap((st) => st.levels);

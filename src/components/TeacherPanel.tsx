@@ -77,7 +77,7 @@ export function TeacherPanel({ open, onClose }: { open: boolean; onClose: () => 
                 <>
                 <div className="mb-4 grid gap-2 sm:grid-cols-2">
                   <div className="rounded-2xl border border-lime/30 bg-lime/[0.06] p-3 text-sm sm:col-span-2">
-                    Class code for everyone (login + Chapter 1): <code className="ml-1 font-bold tracking-widest text-lime">{CLASS_CODE}</code>
+                    Class code for everyone (login + Chapters 1–5): <code className="ml-1 font-bold tracking-widest text-lime">{CLASS_CODE}</code>
                   </div>
                   <div className="rounded-2xl border border-lime/30 bg-lime/[0.06] p-3 text-sm">
                     Personal login password: <code className="ml-1 font-bold tracking-widest text-lime">{loginCode(student)}</code>
