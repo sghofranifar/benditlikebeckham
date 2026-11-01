@@ -330,7 +330,7 @@ function UnlockModal({ level, onClose }: { level: Level | null; onClose: () => v
               onKeyDown={(e) => e.key === 'Enter' && tryIt()}
               placeholder="e.g. K7QF"
               aria-label="Personal unlock code"
-              maxLength={6}
+              maxLength={12}
               autoFocus
               whileFocus={{ scale: 1.02 }}
               transition={spring.snappy}

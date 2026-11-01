@@ -9,8 +9,7 @@ import { play } from '../lib/sound';
 import { JessSprite } from '../components/JessSprite';
 import { OptionalImg } from '../components/OptionalImg';
 import { LicenceButton } from '../components/Licence';
-import { levelsUpToStage, loginCode, sameCode } from '../lib/codes';
-import { CLASS_CODE } from '../data/config';
+import { classStage, levelsUpToStage, loginCode, sameCode } from '../lib/codes';
 
 // ─────────────────────────────────────────────────────────────
 // The starting point: Jess's bedroom in 3D (pure CSS 3D, runs on iPads).
@@ -84,14 +83,15 @@ export function RoomScreen() {
   const submitName = () => {
     const n = name.trim();
     if (!n) return;
-    if (!sameCode(pw, loginCode(n)) && !sameCode(pw, CLASS_CODE)) {
+    const shared = classStage(pw);
+    if (!sameCode(pw, loginCode(n)) && shared < 0) {
       play('bad');
       setLoginErr("Hmm, that code doesn't work. Check the class code or your personal password with your teacher.");
       return;
     }
     setLoginErr('');
     s.setName(n);
-    if (sameCode(pw, CLASS_CODE)) levelsUpToStage(0).forEach((id) => s.unlock(id));
+    if (shared >= 0) levelsUpToStage(shared).forEach((id) => s.unlock(id));
     setAskName(false);
     setWaving(true);
     setTimeout(() => setWaving(false), 1900);
@@ -229,7 +229,7 @@ export function RoomScreen() {
             <motion.form key="name" className="mt-3" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={spring.snappy} onSubmit={(e) => { e.preventDefault(); submitName(); }}>
               <div className="flex flex-col gap-2 sm:flex-row">
                 <motion.input autoFocus value={name} onChange={(e) => setName(e.target.value)} maxLength={24} placeholder="First name" aria-label="Your name" autoComplete="off" whileFocus={{ scale: 1.02 }} transition={spring.snappy} className="min-w-0 flex-1 rounded-full border border-white/15 bg-ink-950/70 px-5 py-3 font-bold outline-none focus:border-lime focus:shadow-glow" />
-                <motion.input value={pw} onChange={(e) => setPw(e.target.value)} maxLength={8} placeholder="Class code" aria-label="Your password" autoComplete="off" autoCapitalize="characters" whileFocus={{ scale: 1.02 }} transition={spring.snappy} className="min-w-0 flex-1 rounded-full border border-white/15 bg-ink-950/70 px-5 py-3 font-bold uppercase tracking-widest outline-none focus:border-lime focus:shadow-glow" />
+                <motion.input value={pw} onChange={(e) => setPw(e.target.value)} maxLength={12} placeholder="Class code" aria-label="Your password" autoComplete="off" autoCapitalize="characters" whileFocus={{ scale: 1.02 }} transition={spring.snappy} className="min-w-0 flex-1 rounded-full border border-white/15 bg-ink-950/70 px-5 py-3 font-bold uppercase tracking-widest outline-none focus:border-lime focus:shadow-glow" />
                 <motion.button type="submit" disabled={!name.trim() || !pw.trim()} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.94 }} transition={spring.snappy} className="rounded-full bg-lime px-5 py-3 font-extrabold uppercase text-ink-950 disabled:opacity-40">
                   Log in ▸
                 </motion.button>

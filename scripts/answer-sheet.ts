@@ -7,7 +7,7 @@ import {
 } from 'docx';
 import { LEVELS } from '../src/data/levels';
 import { STAGES } from '../src/lib/codes';
-import { CLASS_CODE } from '../src/data/config';
+import { CLASS_CODES } from '../src/data/config';
 import type { GameSpec, Task } from '../src/types';
 // @ts-ignore private, git-ignored
 import { ANSWERS } from '../class/answers';
@@ -81,8 +81,11 @@ function codeTable() {
     columnWidths: [W / 2, W / 2],
     rows: [
       new TableRow({ children: [cell('What opens', true), cell('Code', true)] }),
-      new TableRow({ children: [cell('Chapters 1–5'), cell(`${CLASS_CODE} (same for everyone)`)] }),
-      ...STAGES.slice(1).map((st, i) => new TableRow({ children: [cell(st.label), cell(`Code ${i + 2} (personal, see class sheet)`)] })),
+      new TableRow({ children: [cell('Chapter 1'), cell('open after login')] }),
+      ...STAGES.map((st, i) => {
+        const shared = CLASS_CODES.find((c) => c.stage === i);
+        return new TableRow({ children: [cell(st.label), cell(shared ? `${shared.code} (same for everyone) or personal Code ${i + 1}` : `Code ${i + 1} (personal, see class sheet)`)] });
+      }),
     ],
   });
 }

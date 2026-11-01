@@ -20,10 +20,14 @@ export const LICENCE = {
 // Master password for the Teacher Panel (🔑 icon).
 export const TEACHER_MASTER_PASSWORD = 'beckham7';
 
-// Shared class code for everyone: opens Chapters 1–5 (holiday reading).
-// Use it to log in (first name + code) or type it on any locked chapter 2–5.
-// All later codes (Chapters 6–7 onwards) stay personal.
-export const CLASS_CODE = 'BEND25';
+// Shared class codes (same for everyone). Each one opens its chapters AND all earlier ones.
+// Students can log in with first name + code, type it on a locked chapter, or open a link like
+// https://sghofranifar.github.io/benditlikebeckham/#code=NAIROBI7&level=6
+// stage = index in STAGES (src/lib/codes.ts): 0 = Chapters 2–5, 1 = Chapters 6–7, ...
+export const CLASS_CODES: { code: string; stage: number; label: string }[] = [
+  { code: 'BEND25', stage: 0, label: 'Chapters 1–5' },
+  { code: 'NAIROBI7', stage: 1, label: 'Chapters 1–7' },
+];
 
 // Secret mixed into every personal unlock / completion code.
 // Change it for a new class or a new school year: all old codes stop working.

@@ -1,4 +1,6 @@
 import { AnimatePresence, MotionConfig, motion } from 'framer-motion';
+import { useEffect } from 'react';
+import { classStage, levelsUpToStage } from './lib/codes';
 import { useGame } from './store';
 import { Backdrop, Grain } from './components/Backdrop';
 import { TopBar } from './components/TopBar';
@@ -20,6 +22,25 @@ export default function App() {
 
   // Guard: no name yet → always the room; a locked level can never be opened directly.
   const playerName = useGame((s) => s.playerName);
+
+  // Direct links: #code=NAIROBI7&level=6 unlocks with a shared class code and opens that chapter.
+  // Without a name yet, the student logs in first and then lands on the chapter automatically.
+  useEffect(() => {
+    const apply = () => {
+      const params = new URLSearchParams(window.location.hash.replace(/^#/, ''));
+      const code = params.get('code');
+      const level = Number(params.get('level'));
+      if (!code && !level) return;
+      const st = useGame.getState();
+      const stage = code ? classStage(code) : -1;
+      if (stage >= 0) levelsUpToStage(stage).forEach((id) => st.unlock(id));
+      if (level) st.go({ name: 'level', id: level });
+      history.replaceState(null, '', window.location.pathname + window.location.search);
+    };
+    apply();
+    window.addEventListener('hashchange', apply); // link opened while the app is already running
+    return () => window.removeEventListener('hashchange', apply);
+  }, []);
   const safe: typeof screen = !playerName ? { name: 'room' } : (screen.name === 'level' || screen.name === 'game') && !unlocked.includes(screen.id) ? { name: 'hub' } : screen;
   const accent = safe.name === 'level' || safe.name === 'game' ? accentHex[levelById(safe.id).accent] : '#c8ff3d';
   const key = 'id' in safe ? `${safe.name}-${safe.id}` : safe.name;

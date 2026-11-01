@@ -3,7 +3,7 @@
 // Run: npm run class-sheet
 import { readFileSync, writeFileSync } from 'node:fs';
 import { STAGES, loginCode, normaliseName, stageCode } from '../src/lib/codes';
-import { CLASS_CODE } from '../src/data/config';
+import { CLASS_CODES } from '../src/data/config';
 
 const names = readFileSync('class/names.txt', 'utf8').split('\n').map((n) => n.trim()).filter(Boolean);
 const seen = new Map<string, string>();
@@ -52,7 +52,7 @@ th,td{border:1px solid #999;padding:5px 7px;text-align:center}th{background:#eee
 <h1>Bend It Quest · Class sheet</h1>
 <div>K07 · ${names.length} students · teacher copy · CONFIDENTIAL</div>
 <p class="warn">Do not upload or share this page. It is generated locally and is not part of the public app. Names are entered exactly as on the cards (capitals and spaces don't matter).</p>
-<h2>Class code for everyone (Chapters 1–5): <span class="pw">${CLASS_CODE}</span></h2><p>Students log in with their first name exactly as below + the class code: Chapters 1–5 open at once. Students already logged in type the class code on any locked chapter 2–5. From Code 2 (Chapters 6–7) everything is personal.</p><h2>Overview</h2>
+<h2>Class codes for everyone</h2><p>${CLASS_CODES.map((c) => `<span class="pw">${c.code}</span> = ${c.label}`).join(' &nbsp;·&nbsp; ')}</p><p>Students log in with their first name exactly as below + a class code, or type it on a locked chapter. Later stages without a class code use the personal codes below.</p><h2>Overview</h2>
 <table><tr><th>Name</th><th>Login password</th>${STAGES.map((st, i) => `<th>Code ${i + 1}<br><small>${st.label}</small></th>`).join('')}</tr>${rows}</table>
 <div class="page"><h2>Login cards (cut out, one per student)</h2><div class="cards">${cards}</div></div>
 <div class="page"><h2>Unlock-code strips (cut out and hand out one stage at a time)</h2>${strips}</div>

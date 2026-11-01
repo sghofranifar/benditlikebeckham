@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Modal } from './Modal';
 import { LEVELS } from '../data/levels';
-import { CLASS_CODE, TEACHER_MASTER_PASSWORD } from '../data/config';
+import { CLASS_CODES, TEACHER_MASTER_PASSWORD } from '../data/config';
 import { STAGES, completionCode, loginCode, stageCode } from '../lib/codes';
 import { useGame } from '../store';
 import { SpringButton } from './ui';
@@ -77,7 +77,7 @@ export function TeacherPanel({ open, onClose }: { open: boolean; onClose: () => 
                 <>
                 <div className="mb-4 grid gap-2 sm:grid-cols-2">
                   <div className="rounded-2xl border border-lime/30 bg-lime/[0.06] p-3 text-sm sm:col-span-2">
-                    Class code for everyone (login + Chapters 1–5): <code className="ml-1 font-bold tracking-widest text-lime">{CLASS_CODE}</code>
+                    Class codes for everyone: {CLASS_CODES.map((c) => (<span key={c.code} className="mr-3"><code className="ml-1 font-bold tracking-widest text-lime">{c.code}</code> = {c.label}</span>))}
                   </div>
                   <div className="rounded-2xl border border-lime/30 bg-lime/[0.06] p-3 text-sm">
                     Personal login password: <code className="ml-1 font-bold tracking-widest text-lime">{loginCode(student)}</code>
