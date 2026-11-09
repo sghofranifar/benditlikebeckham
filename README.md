@@ -14,8 +14,8 @@ Students use the app to **see tasks and play games**. **All writing happens in t
 
 ### Logins and unlock codes
 
-1. Each student logs in once per device in Jess's room with their **first name** + a shared **class code**: `BEND25` opens Chapters 1–5, `NAIROBI7` opens Chapters 1–7. Students who are already logged in type the code on any locked chapter. Shared codes live in `src/data/config.ts` (`CLASS_CODES`).
-   - Direct links: `https://sghofranifar.github.io/benditlikebeckham/#code=NAIROBI7&level=6` (and `&level=7`) unlock and open that chapter (after login if needed).
+1. Each student logs in once per device in Jess's room with their **first name** + a shared **class code**: `BEND25` opens Chapters 1–5, `NAIROBI7` opens Chapters 1–7, `SANTACLARA` opens everything (Chapters 1–13, Finale, Extra Time). Students who are already logged in type the code on any locked chapter. Shared codes live in `src/data/config.ts` (`CLASS_CODES`).
+   - Direct links: `https://sghofranifar.github.io/benditlikebeckham/#code=NAIROBI7&level=6` (and `&level=7`) unlock and open that chapter (after login if needed). Same pattern for the rest, e.g. `#code=SANTACLARA&level=8`.
 2. **Code 1** (personal, optional now) also opens Chapters 2–5. **Codes 2–6** each open two more levels (6–7, 8–9, 10–11, 12–13, Finale + Extra Time). A code also opens every earlier stage, so on a new device the student only needs their latest code.
 3. A chapter's game opens once all its notebook tasks are ticked. Winning shows a **completion code** to copy into the notebook; the Teacher panel shows the correct one.
 4. All codes are personal: they only work with that student's name.

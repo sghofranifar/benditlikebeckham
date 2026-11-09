@@ -27,6 +27,7 @@ export const TEACHER_MASTER_PASSWORD = 'beckham7';
 export const CLASS_CODES: { code: string; stage: number; label: string }[] = [
   { code: 'BEND25', stage: 0, label: 'Chapters 1–5' },
   { code: 'NAIROBI7', stage: 1, label: 'Chapters 1–7' },
+  { code: 'SANTACLARA', stage: 5, label: 'All chapters (1–13) + Finale + Extra Time' },
 ];
 
 // Secret mixed into every personal unlock / completion code.
