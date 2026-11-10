@@ -561,6 +561,15 @@ export const LEVELS: Level[] = [
         prompt: 'Add Joe\'s story about his dad to "Family & Tradition". How is Joe\'s father different from Jess\'s parents? How is he similar?',
         minutes: 6,
       },
+      {
+        id: 'l5-diary',
+        focus: 'Creative',
+        title: 'Diary Entry Practice (worksheet)',
+        prompt: 'Same task as your Dear Diary worksheet. Choose ONE moment, re-read the pages, plan it (5 min), write a 150–180-word diary entry in your exercise book, then check it with the worksheet checklist. ★ = main protagonist: try Jess or Jules first, as you will need them in the exam. Moments: A · Jess ★: the night after the boot discovery and the next training session (pp. 56–62). B · Pinky: the day she discovers Jess\'s secret and decides to keep it (pp. 48–51). C · Jules ★: after the evening in the pub (America, Mia Hamm, Loughborough) (pp. 54–56).',
+        support: 'Dear Diary, What a day! · I can\'t believe that … · I felt so … when … · Part of me wants to …, but … · Why can\'t they understand that …? · I\'m worried that … · Tomorrow I\'m going to …',
+        sprinter: 'Same moment, different diary: write a second entry (80–100 words) by another character who was there, e.g. D and E, or H and I. Then write two sentences: how are their feelings different, and why?',
+        minutes: 30,
+      },
     ],
     sprinter: {
       id: 'l5-sprint',
@@ -676,6 +685,15 @@ export const LEVELS: Level[] = [
         quote: { text: 'The house was like a morgue.', ref: 'Ch. 6, p. 73' },
         minutes: 6,
       },
+      {
+        id: 'l6-diary',
+        focus: 'Creative',
+        title: 'Diary Entry Practice (worksheet)',
+        prompt: 'Same task as your Dear Diary worksheet. Choose ONE moment, re-read the pages, plan it (5 min), write a 150–180-word diary entry in your exercise book, then check it with the worksheet checklist. ★ = main protagonist: try Jess or Jules first, as you will need them in the exam. Moments: D · Jess ★: the night Pinky\'s wedding is called off because of the bus stop (pp. 68–73). E · Pinky: the same night, when her wedding is cancelled and she tells everyone about Jess\'s football (pp. 68–74). F · Jules ★: after Jess\'s visit and Mrs Paxton\'s comments (pp. 63–68).',
+        support: 'Dear Diary, What a day! · I can\'t believe that … · I felt so … when … · Part of me wants to …, but … · Why can\'t they understand that …? · I\'m worried that … · Tomorrow I\'m going to …',
+        sprinter: 'Same moment, different diary: write a second entry (80–100 words) by another character who was there, e.g. D and E, or H and I. Then write two sentences: how are their feelings different, and why?',
+        minutes: 30,
+      },
     ],
     sprinter: {
       id: 'l6-sprint',
@@ -788,6 +806,15 @@ export const LEVELS: Level[] = [
         title: 'Theme Tracker: Prejudice',
         prompt: 'Add Dad\'s cricket story to "Prejudice". Add Joe\'s line ("your parents don\'t always know what\'s best") to "Family & Tradition". Do you agree with Joe?',
         minutes: 6,
+      },
+      {
+        id: 'l7-diary',
+        focus: 'Creative',
+        title: 'Diary Entry Practice (worksheet)',
+        prompt: 'Same task as your Dear Diary worksheet. Choose ONE moment, re-read the pages, plan it (5 min), write a 150–180-word diary entry in your exercise book, then check it with the worksheet checklist. ★ = main protagonist: try Jess or Jules first, as you will need them in the exam. Moments: G · Mr Bhamra: the evening Joe comes and Dad tells his cricket story (pp. 75–78). H · Jess ★: the night in Hamburg after the match and the penalty shoot-out (pp. 78–85). I · Jules ★: the night in Hamburg (pp. 79–85).',
+        support: 'Dear Diary, What a day! · I can\'t believe that … · I felt so … when … · Part of me wants to …, but … · Why can\'t they understand that …? · I\'m worried that … · Tomorrow I\'m going to …',
+        sprinter: 'Same moment, different diary: write a second entry (80–100 words) by another character who was there, e.g. D and E, or H and I. Then write two sentences: how are their feelings different, and why?',
+        minutes: 30,
       },
     ],
     sprinter: {

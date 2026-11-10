@@ -20,8 +20,8 @@ export const levelTaskIds = (l: Level) => [
   l.sprinter.id,
 ];
 
-// Tasks that must be ticked before the game unlocks (everything except the optional Sprinter).
-export const coreTaskIds = (l: Level) => levelTaskIds(l).filter((id) => id !== l.sprinter.id);
+// Tasks that must be ticked before the game unlocks (everything except the optional Sprinter and the diary worksheet task).
+export const coreTaskIds = (l: Level) => levelTaskIds(l).filter((id) => id !== l.sprinter.id && !id.endsWith('-diary'));
 export const coreDone = (l: Level, s: Pick<Save, 'doneTasks'>) => coreTaskIds(l).filter((id) => s.doneTasks[id]).length;
 
 export function levelProgress(l: Level, s: Save) {
